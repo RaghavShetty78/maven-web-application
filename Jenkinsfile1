@@ -5,6 +5,7 @@ pipeline {
     }
 
     triggers {
+	      upstream 'UpStream_Job'
               pollSCM('* * * * *')
     }
 
