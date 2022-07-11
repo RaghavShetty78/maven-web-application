@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    tools{
+          maven "maven3.8.4"
+    }
+
+    triggers {
+              pollSCM('* * * * *')
+    }
+
+    parameters {
+        string(name: 'project_name', defaultValue: 'Maven Pipeline', description: 'Jenkins Pipeline for Maven Project')
+    }
+
+    stages {
+
+          stage('code checkout') {
+               steps {
+                      git branch: 'research', url: 'https://github.com/RaghavShetty78/maven-web-application.git'
+                     }
+          }
+
+          stage('DeployAppintoTomcatServer'){
+		steps{
+		      sshagent(['7311088e-96c5-4f0e-bb7a-4541528bdce4']) {
+			sh "scp -o StrictHostKeyChecking=no /root/.jenkins/workspace/UpStream_Job/target/maven-web-application.war ubuntu@172.31.47.178:/opt/tomcat/webapps"
+		      }
+		}
+	  }
+    }
+}
