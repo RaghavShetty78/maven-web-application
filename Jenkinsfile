@@ -3,11 +3,11 @@ pipeline {
     tools{
           maven "maven3.8.4"
     }
-
+/*
     triggers {
              // pollSCM('* * * * *')
     }
-
+*/
     parameters {
         string(name: 'project_name', defaultValue: 'Maven Pipeline', description: 'Jenkins Pipeline for Maven Project')
     }
