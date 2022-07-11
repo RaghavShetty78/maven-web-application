@@ -23,7 +23,7 @@ pipeline {
           stage('DeployAppintoTomcatServer'){
 		steps{
 		      sshagent(['7311088e-96c5-4f0e-bb7a-4541528bdce4']) {
-			sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.47.178:sudo /opt/tomcat/bin/startup.sh"
+			sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.47.178 sudo /opt/tomcat/bin/startup.sh"
 			sh "scp -o StrictHostKeyChecking=no /root/.jenkins/workspace/UpStream_Job/target/maven-web-application.war ubuntu@172.31.47.178:/opt/tomcat/webapps"
 		      }
 		}
