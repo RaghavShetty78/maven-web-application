@@ -3,11 +3,11 @@ pipeline {
     tools{
           maven "maven3.8.4"
     }
-/*
+    /*
     triggers {
              // pollSCM('* * * * *')
     }
-*/
+    */
     parameters {
         string(name: 'project_name', defaultValue: 'Maven Pipeline', description: 'Jenkins Pipeline for Maven Project')
     }
@@ -20,10 +20,21 @@ pipeline {
                      }
           }
 
-          stage('Build'){
+          stage('Build') {
 		steps {
 			sh "mvn clean package"
 		}
 	  }
+
+          stage('Deploy??') {
+                steps {
+                    script {
+                       timeout(time: 2, unit: 'MINUTES') {
+                          input(id: "Deploy Gate", message: "Want to Deploy ${params.project_name}?", ok: 'Deploy??')
+                       }
+                    }
+                }
+          }
+
     }
 }
