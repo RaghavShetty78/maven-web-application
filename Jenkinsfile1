@@ -3,11 +3,16 @@ pipeline {
     tools{
           maven "maven3.8.4"
     }
-
+    /*
     triggers {
   	upstream 'Upstream_Job'
     }
-
+    */
+    
+    triggers {   
+        upstream(upstreamProjects: "Upstream_Job", threshold: hudson.model.Result.SUCCESS)
+    }
+    
     parameters {
         string(name: 'project_name', defaultValue: 'Maven Pipeline', description: 'Jenkins Pipeline for Maven Project')
     }
