@@ -5,10 +5,9 @@
 	<groupId>com.mt</groupId>
 	<artifactId>maven-web-application</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	
+	<version>1.0.0</version>
+	<url>https://www.jfrog.com/confluence/display/JFROG/Maven+Artifactory+Plugin</url>
 	<name>maven-web-application</name>
-
 	<description>Maven Web Project for Java Project</description>
 
 	<organization>
@@ -18,12 +17,10 @@
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
+		<buildinfo.version>2.41.3</buildinfo.version>
 		<spring.version>5.1.2.RELEASE</spring.version>
 		<junit.version>4.11</junit.version>
 		<log4j.version>1.2.17</log4j.version>
-		<sonar.host.url>http://13.233.216.196:9980/</sonar.host.url>
-		<sonar.login>admin</sonar.login>
-		<sonar.password>admin</sonar.password> 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -94,24 +91,19 @@
 	</dependencies>
 	
 	<distributionManagement>
-	
-	    <repository>
-	      <id>nexus</id>
-	      <name>Mithun Technologies Releases Nexus Repository</name>
-	      <url>http://54.255.174.111:8081/repository/flipkart-release/</url>
-	    </repository>
-	    
-	    <snapshotRepository>
-	      <id>nexus</id>
-	      <name>Mithun Technologies Snapshot Nexus Repository </name>
-	      <url>http://54.255.174.111:8081/repository/flipkart-snapshot/</url>
-	    </snapshotRepository>
-	    
-	</distributionManagement>
-	
+    <repository>
+        <id>central</id>
+        <name>a0kx3kndr0qsw-artifactory-primary-0-releases</name>
+        <url>https://jfrogartifactory78.jfrog.io/artifactory/poc-releases</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>a0kx3kndr0qsw-artifactory-primary-0-snapshots</name>
+        <url>https://jfrogartifactory78.jfrog.io/artifactory/poc-snapshots</url>
+    </snapshotRepository>
+</distributionManagement>
 	<build>
 		<finalName>maven-web-application</finalName>
-		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -144,11 +136,51 @@
 					<downloadJavadocs>true</downloadJavadocs>
 					<wtpversion>2.0</wtpversion>
 					<wtpContextName>maven-web-application</wtpContextName>
+					<!--publisher>
+					<contextUrl>https://jfrogartifactory78.jfrog.io/artifactory</contextUrl>
+					<username>raghav</username>
+					<password>Raghav@78</password>
+					<excludePatterns>*-tests.jar</excludePatterns>
+					<repoKey>poc-qa-releases</repoKey>
+					<snapshotRepoKey>poc-snapshots</snapshotRepoKey>
+					<publishArtifacts>true</publishArtifacts>
+					<publishBuildInfo>true</publishBuildInfo>
+					</publisher-->
 				</configuration>
 			</plugin>
-			
-</plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.2</version>
+			</plugin>	
+			<plugin>
+				<groupId>org.jfrog.buildinfo</groupId>
+				<artifactId>artifactory-maven-plugin</artifactId>
+				<version>3.6.1</version>
+				<executions>
+					<execution>
+					<id>build-info</id>
+					<goals>
+						<goal>publish</goal>
+					</goals>
+					<configuration>
+						<publisher>
+						<contextUrl>https://jfrogartifactory78.jfrog.io/artifactory</contextUrl>
+						<username>raghav</username>
+						<password>Raghav@78</password>
+						<repoKey>poc-qa-releases</repoKey>
+						<!--
+						<snapshotRepoKey>poc-snapshots</snapshotRepoKey>
+						-->
+						</publisher>
+						<buildInfo>
+							<buildNumber>${buildnumber}</buildNumber>
+							<buildName>maven-web-application-qa</buildName>
+						</buildInfo>
+					</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
-	
-	
 </project>
